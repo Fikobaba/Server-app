@@ -1,3 +1,4 @@
+const path = require('path');
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
@@ -5,6 +6,11 @@ var url = require("url");
 var bodyParser = require('body-parser');
 
 app.use(bodyParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 var clientResponseRef;
 app.get('/*', (req, res) => {
